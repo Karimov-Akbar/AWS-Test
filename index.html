@@ -1,9 +1,116 @@
-<html>
-<body bgcolor=black>
-<marquee>
-	<font color=yellow>
-		<h1> Welcome to Apache Server!!! HELLO</h1>
-	</font>
-</marquee>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wonderful Wildlife Zoo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2em;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1em;
+        }
+        .animal-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .animal-card:hover {
+            transform: translateY(-5px);
+        }
+        .animal-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .animal-info {
+            padding: 1em;
+        }
+        .feed-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .feed-button:hover {
+            background-color: #45a049;
+        }
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Wonderful Wildlife Zoo</h1>
+    </header>
+    <main>
+        <div class="gallery" id="animalGallery"></div>
+    </main>
+
+    <script>
+        const animals = [
+            { name: "Lion", image: "https://images.pexels.com/photos/247502/pexels-photo-247502.jpeg", feedCount: 0 },
+            { name: "Elephant", image: "https://images.pexels.com/photos/66898/elephant-cub-tsavo-kenya-66898.jpeg", feedCount: 0 },
+            { name: "Giraffe", image: "https://images.pexels.com/photos/277321/pexels-photo-277321.jpeg", feedCount: 0 },
+            { name: "Penguin", image: "https://images.pexels.com/photos/86405/penguin-funny-blue-water-86405.jpeg", feedCount: 0 },
+            { name: "Tiger", image: "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg", feedCount: 0 },
+            { name: "Monkey", image: "https://images.pexels.com/photos/1207875/pexels-photo-1207875.jpeg", feedCount: 0 }
+        ];
+
+        function createAnimalCard(animal) {
+            const card = document.createElement('div');
+            card.className = 'animal-card';
+            card.innerHTML = `
+                <img src="${animal.image}" alt="${animal.name}">
+                <div class="animal-info">
+                    <h2>${animal.name}</h2>
+                    <p>Times fed: <span id="${animal.name.toLowerCase()}-feed-count">${animal.feedCount}</span></p>
+                    <button class="feed-button" onclick="feedAnimal('${animal.name}')">Feed ${animal.name}</button>
+                </div>
+            `;
+            return card;
+        }
+
+        function feedAnimal(animalName) {
+            const animal = animals.find(a => a.name === animalName);
+            if (animal) {
+                animal.feedCount++;
+                document.getElementById(`${animalName.toLowerCase()}-feed-count`).textContent = animal.feedCount;
+            }
+        }
+
+        function initializeGallery() {
+            const gallery = document.getElementById('animalGallery');
+            animals.forEach(animal => {
+                gallery.appendChild(createAnimalCard(animal));
+            });
+        }
+
+        initializeGallery();
+    </script>
 </body>
 </html>
